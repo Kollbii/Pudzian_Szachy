@@ -21,14 +21,13 @@ class Board:
         pass
 
 class Pionek:
-    def __init__(self,pawn,id,n,board,dim_board):
+    def __init__(self,pawn,n,board,dim_board):
         self.cords = []
         self.pawn = pawn
-        self.id = id 
         self.n = n
         self.board = board
         self.dim = dim_board
-        
+
 
     def PlaceOnBoard(self):
 
@@ -46,7 +45,7 @@ class Pionek:
                 self.cords.append(new_cord)
             
         for cord in self.cords:
-            self.board[cord[0]][cord[1]] = self.id
+            self.board[cord[0]][cord[1]] = self.pawn
     
 
 class Hetman(Pionek):
