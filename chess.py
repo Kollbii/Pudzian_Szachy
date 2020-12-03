@@ -21,16 +21,15 @@ class Board:
         pass
 
 class Pionek:
-    def __init__(self,pawn,id,n,board,dim_board):
+    def __init__(self,pawn,n,board,dim_board):
         self.cords = []
-        self.pawn = pawn
-        self.id = id 
+        self.pawn = pawn 
         self.n = n
         self.board = board
         self.dim = dim_board
         
 
-    def PlaceOnBoard(self):
+    def PlaceOnBoard(self,board):
 
         for _ in range(self.n):
              
@@ -46,8 +45,9 @@ class Pionek:
                 self.cords.append(new_cord)
             
         for cord in self.cords:
-            self.board[cord[0]][cord[1]] = self.id
+            board[cord[0]][cord[1]] = self.pawn
     
+        return board
 
 class Hetman(Pionek):
     pass
@@ -55,7 +55,7 @@ class Hetman(Pionek):
 class Goniec(Pionek):
     def __init__(self):
         pass
-    pass
+    
 
 class Skoczek(Pionek):
     pass
@@ -66,4 +66,8 @@ if os.path.exists(p+"/board.txt") == True:
     os.remove(p+"/board.txt")
 
 b = Board()
-b.createBoard(10)
+tablica = b.createBoard(10)
+h = Hetman("H",5,tablica,b.dim)
+print(tablica)
+print(b.dim)
+print(h.PlaceOnBoard(tablica))
