@@ -54,6 +54,7 @@ class Hetman(Pionek):
 
 class Goniec(Pionek):
     def __init__(self):
+        print("siemka siemka")
         pass
     
 
