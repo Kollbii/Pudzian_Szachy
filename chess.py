@@ -21,12 +21,14 @@ class Board:
         pass
 
 class Pionek:
-    def __init__(self,pawn,id,n,board):
+    def __init__(self,pawn,id,n,board,dim_board):
         self.cords = []
         self.pawn = pawn
         self.id = id
         self.n = n
         self.board = board
+        self.dim = dim_board
+
 
     def PlaceOnBoard(self):
 
