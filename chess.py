@@ -28,7 +28,7 @@ class Pionek:
         self.n = n
         self.board = board
         self.dim = dim_board
-
+        
 
     def PlaceOnBoard(self):
 
@@ -47,7 +47,6 @@ class Pionek:
             
         for cord in self.cords:
             self.board[cord[0]][cord[1]] = self.id
-
     
 
 class Hetman(Pionek):
