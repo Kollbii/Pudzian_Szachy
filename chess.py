@@ -53,6 +53,8 @@ class Hetman(Pionek):
     pass
 
 class Goniec(Pionek):
+    def __init__(self):
+        pass
     pass
 
 class Skoczek(Pionek):
