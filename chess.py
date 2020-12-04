@@ -117,7 +117,6 @@ class Skoczek(Pionek):
         return False
 
     def getChecked(self, board):
-        global info
         moves = [[1,2],[2,1],[-1,2],[-2,1],[-1,-2],[-2,-1],[1,-2],[2,-1]]
 
         for i in range (0, len(self.board)):
@@ -136,6 +135,7 @@ class Skoczek(Pionek):
 # Tutaj tego śmiesznego __init__ = '__name__' wstawić ?
 # wstawiłem ale idk jak to ma działać dokładnie X"D 
 def start():
+    os.system('cls')
     p = os.getcwd()
     if os.path.exists(p+"/board.txt") == True:
         os.remove(p+"/board.txt")
