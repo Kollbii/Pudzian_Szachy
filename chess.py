@@ -26,6 +26,17 @@ info = ''
 # Każdy skoczek sprawdza wszystkie możliwe pola dookoła siebie 
 # ~~Kollbi
 #
+# Jest pomysł przerobić programik tak że na początku wszystkie pionki położone są zielone i teraz tak:
+# 1) wybieramy gońce i wszystkie pozostałe pionki które szachują gońce są czerwone
+# 2) wybieramy skoczki i wszystkie pozostałe pionki które szachują skoczki są czerwone
+# 3) wybieramy hetmany i wszystkie pozostałe pionki które szachują hetmany są czerwone
+#
+# więc trzeba przerobić teraz lekko programik i zrobić funkcje:
+# 1)funkcja resetowania całej planszy na zielone pionki
+# 2)interfejs wyboru opcji (patrz punkt wyżej)
+# 
+# output jaki jest czyli "♞ na [2][2] szachuje ♛ na [0][1]" jest gites i zostaje tylko będą tam pokazane odpowiednie wybrane pionki
+# ~~czujsnn
 #
 ################################################
 
