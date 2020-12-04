@@ -101,18 +101,8 @@ class Goniec(Pionek):
     pass
 
 class Skoczek(Pionek):
-    def doesCheckKnight(self, board, i, j, x, y):
-        if board[i + x][j + y] == f'{GREEN}♞{RESET}':
-            return True
-        return False
-
-    def doesCheckQueen(self, board, i, j, x, y):
-        if board[i + x][j + y] == f'{GREEN}♛{RESET}':
-            return True
-        return False
-
-    def doesCheckBishop(self, board, i, j, x, y):
-        if board[i + x][j + y] == f'{GREEN}♝{RESET}':
+    def doesCheck(self, board, i, j, x, y, option):
+        if board[i + x][j + y] == f'{GREEN}{option}{RESET}':
             return True
         return False
 
@@ -135,11 +125,11 @@ class Skoczek(Pionek):
                 if self.board[i][j] == f'{GREEN}♞{RESET}' or self.board[i][j] == f'{RED}♞{RESET}':    # Tutaj wybiera też czerwone skoczki bo czerwony może szachować jakiegoś hetmana jeszcze.
                     for x, y in moves:                                                                  # duplikaty się NIE robią bo w sprawdzaniu jest ustawiony "zielony skoczek" :)
                         if self.isSafe(board, i, j, x, y):
-                            if self.doesCheckKnight(board, i, j, x, y) == True:
+                            if self.doesCheck(board, i, j, x, y, "♞") == True:
                                 self.markChecked(board, i, j, x, y, "♞")
-                            elif self.doesCheckQueen(board, i, j, x, y) == True:
+                            elif self.doesCheck(board, i, j, x, y, "♛") == True:
                                 self.markChecked(board, i, j, x, y, "♛")
-                            elif self.doesCheckBishop(board, i, j, x, y) == True:
+                            elif self.doesCheck(board, i, j, x, y, "♝") == True:
                                 self.markChecked(board, i, j, x, y, "♝")
         return board
 
