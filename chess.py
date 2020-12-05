@@ -44,6 +44,15 @@ info = ''
 #-zrobić nieskonczona petle z wyborem i resetowaniem planszy
 #naprawiłem też buga z hetmanami to pora na cska B)
 # ~~czujsnn
+#
+# To ja na dobry sen dorobiłem prosty interfejsik #bo_mogę_i_pudzian_dałby_okejkę
+# Nieskonczona pętla z wyborem też jest nie jest ona bogiem user inputów więc jak ma ktoś jakieś uwagi do poprawki 
+# to naprawdę nie trzymam XD 
+# I na gicie podepne skrina bo wydaje mi się, że hetman nie powinien tak działać <bo działa jak przeszywajaca strzała>
+# a myslałem, że zatrzymuje się na pierwszym możliwym obiekcie <co powinien chyba zrobić>
+# nie wiem sam do końca dlatego na gicie i #Lab 4 jest obrazek
+# ~~Kollbi
+#
 ################################################
 
 class Board:
@@ -245,6 +254,30 @@ def start():
     if os.path.exists(p+"/board.txt") == True:
         os.remove(p+"/board.txt")
 
+    
+    # USER INPUT
+    # W sumie to nie wiem jak rozbudowane to chcemy mieć i zacząłem myśleć nad inputem usera i tak naprawdę 
+    # to jest tutaj wszystko co potrzba. yolo? Zrobiony? XD Ale coś pewnie wyjdzie w trakcie #pudzian_naprwiajacy
+    while True:
+        try:
+            print("┌──────────────────┐")
+            print("│  Wybierz opcję:  │")
+            print(f"│  [{GREEN}1{RESET}] - Knights   │")
+            print(f"│  [{GREEN}2{RESET}] - Bishops   │")
+            print(f"│  [{GREEN}3{RESET}] - Queens    │")
+            print("└──────────────────┘")
+
+            user_option = int(input("Opcja: "))
+            if user_option == 1 or user_option == 2 or user_option == 3:
+                break
+            else:
+                os.system('cls')
+                print("Podaj poprawną opcję!")
+        except ValueError:
+            os.system('cls')
+            print("Podaj poprawną opcję!")
+
+    os.system('cls')
     b = Board()
     tablica = b.createBoard(10)
     h = Hetman(f"{GREEN}♛{RESET}",2,tablica,b.dim)
@@ -254,14 +287,20 @@ def start():
     knightPlacement = s.placeOnBoard(hetmanPlacement)
     bishopPlacement = g.placeOnBoard(knightPlacement)
 
-    '''
-    test1 = s.getChecked(bishopPlacement)
-    print(s.drawTab(test1))
-    print(info)
-    '''
-    test2 = h.checkTakeDown(bishopPlacement,s.cords,g.cords)
-    print(h.drawTab(test2))
-    print(info)
+
+    print("┌──────────────────┐")
+    print(f"│  Wybrałeś {user_option}      │")
+    print("└──────────────────┘")
+    if user_option == 1:
+        test1 = s.getChecked(bishopPlacement)
+        print(s.drawTab(test1))
+        print(info)
+    elif user_option == 2:
+        pass
+    elif user_option == 3:
+        test3 = h.checkTakeDown(bishopPlacement,s.cords,g.cords)
+        print(h.drawTab(test3))
+        print(info)
 
 if __name__ == "__main__":
     start()
