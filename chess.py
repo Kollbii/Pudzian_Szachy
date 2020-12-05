@@ -38,6 +38,12 @@ info = ''
 # output jaki jest czyli "♞ na [2][2] szachuje ♛ na [0][1]" jest gites i zostaje tylko będą tam pokazane odpowiednie wybrane pionki
 # ~~czujsnn
 #
+#dobra skonczylem klase hetman, teraz zostaje zrobić tak:
+#-zrobić ostatnią klasę pionka ( w sumie to można skopiować moja hetmana i wyjebać x1=x2 y1=y2 ale mi sie nie chce)
+#-zrobic interfejs
+#-zrobić nieskonczona petle z wyborem i resetowaniem planszy
+#naprawiłem też buga z hetmanami to pora na cska B)
+# ~~czujsnn
 ################################################
 
 class Board:
@@ -172,6 +178,26 @@ class Hetman(Pionek):
                         elif self.doesCheckBishop(board,x2, y2) == True:
                             self.markChecked(board,x1,y1,x2,y2,"♝")                    
                         #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+        
+        #przepraszam kazdego za to co teraz robie bo to jest giga zjebane
+        for i in range(0,len(self.cords)):
+            for j in range(i+1,len(self.cords)):
+                x1 = self.cords[i][0]
+                y1 = self.cords[i][1]
+
+                x2 = self.cords[j][0]
+                y2 = self.cords[j][1]
+                
+                if self.board[x1][y1] == f'{GREEN}♛{RESET}' or self.board[x1][y1] == f'{RED}♛{RESET}':
+                    if x1 == x2:
+                        self.markChecked(board,x1,y1,x2,y2,"♛")
+                    if y1 == y2:
+                        self.markChecked(board,x1,y1,x2,y2,"♛")
+                    if x2 - x1 == y2 - y1:
+                        self.markChecked(board,x1,y1,x2,y2,"♛")
+                    if -x2 + x1 == y2 - y1:
+                        self.markChecked(board,x1,y1,x2,y2,"♛")
+
         return board
 
 class Goniec(Pionek):
