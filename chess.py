@@ -93,8 +93,86 @@ class Pionek:
         return draw
 
 class Hetman(Pionek):
-    #TODO
-    pass
+    def mergeCords(self,skoczek_cord,goniec_cord):
+        self.other_cord = []
+        for cord in skoczek_cord:
+            self.other_cord.append(cord)
+        for cord in goniec_cord:
+            self.other_cord.append(cord)
+
+        return self.other_cord
+    
+    def doesCheckKnight(self, board,x,y):
+        if board[x][y] == f'{GREEN}♞{RESET}':
+            return True
+        return False
+
+    def doesCheckQueen(self, board,x, y):
+        if board[x][y] == f'{GREEN}♛{RESET}':
+            return True
+        return False
+
+    def doesCheckBishop(self, board,x, y):
+        if board[x][y] == f'{GREEN}♝{RESET}':
+            return True
+        return False
+
+    def markChecked(self, board, x1, y1, x2, y2, option):
+        global info
+        board[x1][y1] = f'{RED}♛{RESET}'
+        board[x2][y2] = f'{RED}{option}{RESET}'
+        info += f"♛ na [{x1}][{y1}]\t szachuje {option} na [{x2}][{y2}]\n"
+
+    def checkTakeDown(self,board,skoczek_cord,goniec_cord):
+        global info
+        
+        self.other_cord = self.mergeCords(skoczek_cord,goniec_cord)
+        
+        for i in range(0,len(self.cords)):
+            for j in range(0,len(self.other_cord)):
+                x1 = self.cords[i][0]
+                y1 = self.cords[i][1]
+
+                x2 = self.other_cord[j][0]
+                y2 = self.other_cord[j][1]
+                
+                if self.board[x1][y1] == f'{GREEN}♛{RESET}' or self.board[x1][y1] == f'{RED}♛{RESET}':
+                    if x1 == x2:
+                        if self.doesCheckKnight(board,x2,y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♞")
+                        elif self.doesCheckQueen(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♛")
+                        elif self.doesCheckBishop(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♝")
+                        #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+
+                    if y1 == y2:
+                        if self.doesCheckKnight(board,x2, y2) == True:
+                            self.markChecked(board,x1, y1,x2,y2,"♞")
+                        elif self.doesCheckQueen(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♛")
+                        elif self.doesCheckBishop(board,x2,y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♝")
+                        #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+
+                    if x2 - x1 == y2 - y1:
+                        if self.doesCheckKnight(board,x2, y2) == True:
+                            self.markChecked(board,x1, y1,x2,y2,"♞")
+                        elif self.doesCheckQueen(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♛")
+                        elif self.doesCheckBishop(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♝")
+                        #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+
+                    if -x2 + x1 == y2 - y1:
+                        if self.doesCheckKnight(board,x2, y2) == True:
+                            self.markChecked(board,x1, y1,x2,y2,"♞")
+                        elif self.doesCheckQueen(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♛")
+                        elif self.doesCheckBishop(board,x2, y2) == True:
+                            self.markChecked(board,x1,y1,x2,y2,"♝")                    
+                        #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+        return board
 
 class Goniec(Pionek):
     #TODO
@@ -150,8 +228,13 @@ def start():
     knightPlacement = s.placeOnBoard(hetmanPlacement)
     bishopPlacement = g.placeOnBoard(knightPlacement)
 
+    '''
     test1 = s.getChecked(bishopPlacement)
     print(s.drawTab(test1))
+    print(info)
+    '''
+    test2 = h.checkTakeDown(bishopPlacement,s.cords,g.cords)
+    print(h.drawTab(test2))
     print(info)
 
 if __name__ == "__main__":
