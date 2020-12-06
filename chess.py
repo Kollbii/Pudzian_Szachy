@@ -23,7 +23,7 @@ class Board:
         self.dim = dim
         return
 
-
+#kot
 class Pionek:
     def __init__(self, pawn, n, board):
         self.cords = []
