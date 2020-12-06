@@ -64,7 +64,7 @@ class Board:
         self.board = np.array([[ '•' for x in range(self.dim)] for y in range (self.dim)], dtype="object")
         return self.board
 
-
+#kot
 class Pionek:
     def __init__(self, pawn, n, board, dim_board):
         self.cords = []
