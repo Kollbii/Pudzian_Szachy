@@ -117,18 +117,8 @@ class Hetman(Pionek):
 
         return self.other_cord
     
-    def doesCheckKnight(self, board,x,y):
-        if board[x][y] == f'{GREEN}♞{RESET}':
-            return True
-        return False
-
-    def doesCheckQueen(self, board,x, y):
-        if board[x][y] == f'{GREEN}♛{RESET}':
-            return True
-        return False
-
-    def doesCheckBishop(self, board,x, y):
-        if board[x][y] == f'{GREEN}♝{RESET}':
+    def doesCheck(self, board,x,y, option):
+        if board[x][y] == f'{GREEN}{option}{RESET}':
             return True
         return False
 
@@ -153,38 +143,38 @@ class Hetman(Pionek):
                 
                 if self.board[x1][y1] == f'{GREEN}♛{RESET}' or self.board[x1][y1] == f'{RED}♛{RESET}':
                     if x1 == x2:
-                        if self.doesCheckKnight(board,x2,y2) == True:
+                        if self.doesCheck(board,x2,y2, "♞") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♞")
-                        elif self.doesCheckQueen(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♛") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♛")
-                        elif self.doesCheckBishop(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♝") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♝")
                         #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
 
                     if y1 == y2:
-                        if self.doesCheckKnight(board,x2, y2) == True:
+                        if self.doesCheck(board,x2, y2, "♞") == True:
                             self.markChecked(board,x1, y1,x2,y2,"♞")
-                        elif self.doesCheckQueen(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♛") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♛")
-                        elif self.doesCheckBishop(board,x2,y2) == True:
+                        elif self.doesCheck(board,x2,y2, "♝") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♝")
                         #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
 
                     if x2 - x1 == y2 - y1:
-                        if self.doesCheckKnight(board,x2, y2) == True:
+                        if self.doesCheck(board,x2, y2, "♞") == True:
                             self.markChecked(board,x1, y1,x2,y2,"♞")
-                        elif self.doesCheckQueen(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♛") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♛")
-                        elif self.doesCheckBishop(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♝") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♝")
                         #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
 
                     if -x2 + x1 == y2 - y1:
-                        if self.doesCheckKnight(board,x2, y2) == True:
+                        if self.doesCheck(board,x2, y2, "♞") == True:
                             self.markChecked(board,x1, y1,x2,y2,"♞")
-                        elif self.doesCheckQueen(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♛") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♛")
-                        elif self.doesCheckBishop(board,x2, y2) == True:
+                        elif self.doesCheck(board,x2, y2, "♝") == True:
                             self.markChecked(board,x1,y1,x2,y2,"♝")                    
                         #info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
         
