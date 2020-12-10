@@ -69,7 +69,6 @@ class Pionek:
                     draw += "".join(" ")  # •
         return draw
 
-
 class Hetman(Pionek):
     def mergeCords(self, skoczek_cord, goniec_cord):
         self.other_cord = []
@@ -167,7 +166,6 @@ class Hetman(Pionek):
 
         return self.boardInstance.board
 
-
 class Goniec(Pionek):
     def mergeCords(self, skoczek_cord, goniec_cord):
         self.other_cord = []
@@ -244,7 +242,6 @@ class Goniec(Pionek):
 
         return self.boardInstance.board
 
-
 class Skoczek(Pionek):
     def doesCheck(self, i, j, x, y, option):
         if self.boardInstance.board[i + x][j + y] == f"{GREEN}{option}{RESET}":
@@ -287,7 +284,6 @@ class Skoczek(Pionek):
                             elif self.doesCheck(i, j, x, y, "♝") == True:
                                 self.markChecked(i, j, x, y, "♝")
         return self.boardInstance.board
-
 
 def start():
     os.system("cls")
