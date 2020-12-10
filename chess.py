@@ -103,7 +103,7 @@ class Hetman(Pionek):
 
                 x2 = self.other_cord[j][0]
                 y2 = self.other_cord[j][1]
-                # przepraszam kazdego za to co teraz robie bo to jest giga zjebane
+
                 if (
                     self.boardInstance.board[x1][y1] == f"{GREEN}♛{RESET}"
                     or self.boardInstance.board[x1][y1] == f"{RED}♛{RESET}"
@@ -115,7 +115,7 @@ class Hetman(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
                     if y1 == y2:
                         if self.doesCheck(x2, y2, "♞") == True:
@@ -124,7 +124,7 @@ class Hetman(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
                     if x2 - x1 == y2 - y1:
                         if self.doesCheck(x2, y2, "♞") == True:
@@ -133,7 +133,7 @@ class Hetman(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
                     if -x2 + x1 == y2 - y1:
                         if self.doesCheck(x2, y2, "♞") == True:
@@ -142,7 +142,7 @@ class Hetman(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
         for i in range(0, len(self.cords)):
             for j in range(i + 1, len(self.cords)):
@@ -201,7 +201,7 @@ class Goniec(Pionek):
 
                 x2 = self.other_cord[j][0]
                 y2 = self.other_cord[j][1]
-                # przepraszam kazdego za to co teraz robie bo to jest giga zjebane (jest)
+                
                 if (
                     self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
                     or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
@@ -214,7 +214,7 @@ class Goniec(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
                     if -x2 + x1 == y2 - y1:
                         if self.doesCheck(x2, y2, "♞") == True:
@@ -223,7 +223,7 @@ class Goniec(Pionek):
                             self.markChecked(x1, y1, x2, y2, "♛")
                         elif self.doesCheck(x2, y2, "♝") == True:
                             self.markChecked(x1, y1, x2, y2, "♝")
-                        # info += f"♛ {self.cords[i]} szachuje  na {self.other_cord[j]}\n"
+                        
 
         for i in range(0, len(self.cords)):
             for j in range(i + 1, len(self.cords)):
@@ -272,13 +272,13 @@ class Skoczek(Pionek):
                 if (
                     self.boardInstance.board[i][j] == f"{GREEN}♞{RESET}"
                     or self.boardInstance.board[i][j] == f"{RED}♞{RESET}"
-                ):  # Tutaj wybiera też czerwone skoczki bo czerwony może szachować jakiegoś hetmana jeszcze.
+                ):
                     for (
                         x,
                         y,
                     ) in (
                         moves
-                    ):  # duplikaty się NIE robią bo w sprawdzaniu jest ustawiony "zielony skoczek" :)
+                    ):
                         if self.isSafe(i, j, x, y):
                             if self.doesCheck(i, j, x, y, "♞") == True:
                                 self.markChecked(i, j, x, y, "♞")
@@ -339,7 +339,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-
-
-# Test Cases
-# TODO
