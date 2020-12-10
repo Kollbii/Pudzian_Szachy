@@ -23,11 +23,7 @@ class Board:
         self.dim = dim
         return
 
-<<<<<<< HEAD
 
-# kot
-=======
->>>>>>> b6ef36ec7c573062287d58d714896b39b6196b3d
 class Pionek:
     def __init__(self, pawn, n, board):
         self.cords = []
