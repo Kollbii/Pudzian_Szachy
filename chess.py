@@ -23,8 +23,11 @@ class Board:
         self.dim = dim
         return
 
+<<<<<<< HEAD
 
 # kot
+=======
+>>>>>>> b6ef36ec7c573062287d58d714896b39b6196b3d
 class Pionek:
     def __init__(self, pawn, n, board):
         self.cords = []
@@ -170,7 +173,21 @@ class Hetman(Pionek):
         return self.boardInstance.board
 
 
-class Goniec(Hetman):
+class Goniec(Pionek):
+    def mergeCords(self, skoczek_cord, goniec_cord):
+        self.other_cord = []
+        for cord in skoczek_cord:
+            self.other_cord.append(cord)
+        for cord in goniec_cord:
+            self.other_cord.append(cord)
+
+        return self.other_cord
+
+    def doesCheck(self, x, y, option):
+        if self.boardInstance.board[x][y] == f"{GREEN}{option}{RESET}":
+            return True
+        return False
+
     def markChecked(self, x1, y1, x2, y2, option):
         global info
         self.boardInstance.board[x1][y1] = f"{RED}♝{RESET}"
@@ -191,8 +208,8 @@ class Goniec(Hetman):
                 y2 = self.other_cord[j][1]
                 # przepraszam kazdego za to co teraz robie bo to jest giga zjebane (jest)
                 if (
-                    self.boardInstance.board[x1][y1] == f"{GREEN}♛{RESET}"
-                    or self.boardInstance.board[x1][y1] == f"{RED}♛{RESET}"
+                    self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
+                    or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
                 ):
 
                     if x2 - x1 == y2 - y1:
@@ -225,10 +242,6 @@ class Goniec(Hetman):
                     self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
                     or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
                 ):
-                    if x1 == x2:
-                        self.markChecked(x1, y1, x2, y2, "♝")
-                    if y1 == y2:
-                        self.markChecked(x1, y1, x2, y2, "♝")
                     if x2 - x1 == y2 - y1:
                         self.markChecked(x1, y1, x2, y2, "♝")
                     if -x2 + x1 == y2 - y1:
@@ -306,8 +319,8 @@ def start():
     os.system("cls")
     b = Board(10)
     h = Hetman(f"{GREEN}♛{RESET}", 2, b)
-    s = Skoczek(f"{GREEN}♞{RESET}", 3, b)
-    g = Goniec(f"{GREEN}♝{RESET}", 2, b)
+    s = Skoczek(f"{GREEN}♞{RESET}", 5, b)
+    g = Goniec(f"{GREEN}♝{RESET}", 3, b)
     hetmanPlacement = h.placeOnBoard()
     knightPlacement = s.placeOnBoard()
     bishopPlacement = g.placeOnBoard()
@@ -320,7 +333,7 @@ def start():
         print(s.drawTab())
         print(info)
     elif user_option == 2:
-        g.checkTakeDown(s.cords, g.cords)
+        g.checkTakeDown(s.cords, h.cords)
         print(g.drawTab())
         print(info)
     elif user_option == 3:
