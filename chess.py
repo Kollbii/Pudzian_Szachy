@@ -1,9 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import random
 import os
 from colorama import init
-from numpy.ma.core import right_shift
 
 init()
 
@@ -13,7 +11,6 @@ RESET = "\u001b[0m"
 
 global info
 info = ""
-
 
 class Board:
     def __init__(self, dim):
@@ -69,7 +66,7 @@ class Pionek:
                     draw += "".join(" ")  # •
         return draw
 
-class Hetman(Pionek):
+class Goniec(Pionek):
     def mergeCords(self, skoczek_cord, goniec_cord):
         self.other_cord = []
         for cord in skoczek_cord:
@@ -84,6 +81,68 @@ class Hetman(Pionek):
             return True
         return False
 
+    def markChecked(self, x1, y1, x2, y2, option):
+        global info
+        self.boardInstance.board[x1][y1] = f"{RED}♝{RESET}"
+        self.boardInstance.board[x2][y2] = f"{RED}{option}{RESET}"
+        info += f"♝ na [{x1}][{y1}]\t szachuje {option} na [{x2}][{y2}]\n"
+
+    def checkTakeDown(self, skoczek_cord, goniec_cord):
+        global info
+
+        self.other_cord = self.mergeCords(skoczek_cord, goniec_cord)
+
+        for i in range(0, len(self.cords)):
+            for j in range(0, len(self.other_cord)):
+                x1 = self.cords[i][0]
+                y1 = self.cords[i][1]
+
+                x2 = self.other_cord[j][0]
+                y2 = self.other_cord[j][1]
+                
+                if (
+                    self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
+                    or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
+                ):
+
+                    if x2 - x1 == y2 - y1:
+                        if self.doesCheck(x2, y2, "♞") == True:
+                            self.markChecked(x1, y1, x2, y2, "♞")
+                        elif self.doesCheck(x2, y2, "♛") == True:
+                            self.markChecked(x1, y1, x2, y2, "♛")
+                        elif self.doesCheck(x2, y2, "♝") == True:
+                            self.markChecked(x1, y1, x2, y2, "♝")
+                        
+
+                    if -x2 + x1 == y2 - y1:
+                        if self.doesCheck(x2, y2, "♞") == True:
+                            self.markChecked(x1, y1, x2, y2, "♞")
+                        elif self.doesCheck(x2, y2, "♛") == True:
+                            self.markChecked(x1, y1, x2, y2, "♛")
+                        elif self.doesCheck(x2, y2, "♝") == True:
+                            self.markChecked(x1, y1, x2, y2, "♝")
+                        
+
+        for i in range(0, len(self.cords)):
+            for j in range(i + 1, len(self.cords)):
+                x1 = self.cords[i][0]
+                y1 = self.cords[i][1]
+
+                x2 = self.cords[j][0]
+                y2 = self.cords[j][1]
+
+                if (
+                    self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
+                    or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
+                ):
+                    if x2 - x1 == y2 - y1:
+                        self.markChecked(x1, y1, x2, y2, "♝")
+                    if -x2 + x1 == y2 - y1:
+                        self.markChecked(x1, y1, x2, y2, "♝")
+
+        return self.boardInstance.board
+
+class Hetman(Goniec):
     def markChecked(self, x1, y1, x2, y2, option):
         global info
         self.boardInstance.board[x1][y1] = f"{RED}♛{RESET}"
@@ -166,82 +225,6 @@ class Hetman(Pionek):
 
         return self.boardInstance.board
 
-class Goniec(Pionek):
-    def mergeCords(self, skoczek_cord, goniec_cord):
-        self.other_cord = []
-        for cord in skoczek_cord:
-            self.other_cord.append(cord)
-        for cord in goniec_cord:
-            self.other_cord.append(cord)
-
-        return self.other_cord
-
-    def doesCheck(self, x, y, option):
-        if self.boardInstance.board[x][y] == f"{GREEN}{option}{RESET}":
-            return True
-        return False
-
-    def markChecked(self, x1, y1, x2, y2, option):
-        global info
-        self.boardInstance.board[x1][y1] = f"{RED}♝{RESET}"
-        self.boardInstance.board[x2][y2] = f"{RED}{option}{RESET}"
-        info += f"♝ na [{x1}][{y1}]\t szachuje {option} na [{x2}][{y2}]\n"
-
-    def checkTakeDown(self, skoczek_cord, goniec_cord):
-        global info
-
-        self.other_cord = self.mergeCords(skoczek_cord, goniec_cord)
-
-        for i in range(0, len(self.cords)):
-            for j in range(0, len(self.other_cord)):
-                x1 = self.cords[i][0]
-                y1 = self.cords[i][1]
-
-                x2 = self.other_cord[j][0]
-                y2 = self.other_cord[j][1]
-                
-                if (
-                    self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
-                    or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
-                ):
-
-                    if x2 - x1 == y2 - y1:
-                        if self.doesCheck(x2, y2, "♞") == True:
-                            self.markChecked(x1, y1, x2, y2, "♞")
-                        elif self.doesCheck(x2, y2, "♛") == True:
-                            self.markChecked(x1, y1, x2, y2, "♛")
-                        elif self.doesCheck(x2, y2, "♝") == True:
-                            self.markChecked(x1, y1, x2, y2, "♝")
-                        
-
-                    if -x2 + x1 == y2 - y1:
-                        if self.doesCheck(x2, y2, "♞") == True:
-                            self.markChecked(x1, y1, x2, y2, "♞")
-                        elif self.doesCheck(x2, y2, "♛") == True:
-                            self.markChecked(x1, y1, x2, y2, "♛")
-                        elif self.doesCheck(x2, y2, "♝") == True:
-                            self.markChecked(x1, y1, x2, y2, "♝")
-                        
-
-        for i in range(0, len(self.cords)):
-            for j in range(i + 1, len(self.cords)):
-                x1 = self.cords[i][0]
-                y1 = self.cords[i][1]
-
-                x2 = self.cords[j][0]
-                y2 = self.cords[j][1]
-
-                if (
-                    self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
-                    or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
-                ):
-                    if x2 - x1 == y2 - y1:
-                        self.markChecked(x1, y1, x2, y2, "♝")
-                    if -x2 + x1 == y2 - y1:
-                        self.markChecked(x1, y1, x2, y2, "♝")
-
-        return self.boardInstance.board
-
 class Skoczek(Pionek):
     def doesCheck(self, i, j, x, y, option):
         if self.boardInstance.board[i + x][j + y] == f"{GREEN}{option}{RESET}":
@@ -312,9 +295,9 @@ def start():
     h = Hetman(f"{GREEN}♛{RESET}", 2, b)
     s = Skoczek(f"{GREEN}♞{RESET}", 5, b)
     g = Goniec(f"{GREEN}♝{RESET}", 3, b)
-    hetmanPlacement = h.placeOnBoard()
-    knightPlacement = s.placeOnBoard()
-    bishopPlacement = g.placeOnBoard()
+    h.placeOnBoard()
+    s.placeOnBoard()
+    g.placeOnBoard()
 
     print("┌──────────────────┐")
     print(f"│  Wybrałeś {user_option}      │")
@@ -331,6 +314,19 @@ def start():
         h.checkTakeDown(s.cords, g.cords)
         print(h.drawTab())
         print(info)
+
+class TestCheckmate:
+    def testHetmanCheck(self):
+        global info
+        b = Board(10)
+        h = Hetman(f"{GREEN}♛{RESET}", 1, b)
+        s = Skoczek(f"{GREEN}♞{RESET}", 5, b)
+        g = Goniec(f"{GREEN}♝{RESET}", 5, b)
+        h.placeOnBoard()
+        s.placeOnBoard()
+        g.placeOnBoard()
+        h.checkTakeDown(s.cords, g.cords)
+        assert info == info
 
 
 if __name__ == "__main__":
