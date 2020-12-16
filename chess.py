@@ -7,6 +7,7 @@ init()
 
 GREEN = "\u001b[32m"
 RED = "\u001b[31m"
+YELLOW = "\u001b[33m"
 RESET = "\u001b[0m"
 
 global info
@@ -83,7 +84,7 @@ class Goniec(Pionek):
 
     def markChecked(self, x1, y1, x2, y2, option):
         global info
-        self.boardInstance.board[x1][y1] = f"{RED}♝{RESET}"
+        self.boardInstance.board[x1][y1] = f"{YELLOW}♝{RESET}"
         self.boardInstance.board[x2][y2] = f"{RED}{option}{RESET}"
         info += f"♝ na [{x1}][{y1}]\t szachuje {option} na [{x2}][{y2}]\n"
 
@@ -103,6 +104,7 @@ class Goniec(Pionek):
                 if (
                     self.boardInstance.board[x1][y1] == f"{GREEN}♝{RESET}"
                     or self.boardInstance.board[x1][y1] == f"{RED}♝{RESET}"
+                    or self.boardInstance.board[x1][y1] == f"{YELLOW}♝{RESET}"
                 ):
 
                     if x2 - x1 == y2 - y1:
@@ -145,7 +147,7 @@ class Goniec(Pionek):
 class Hetman(Goniec):
     def markChecked(self, x1, y1, x2, y2, option):
         global info
-        self.boardInstance.board[x1][y1] = f"{RED}♛{RESET}"
+        self.boardInstance.board[x1][y1] = f"{YELLOW}♛{RESET}"
         self.boardInstance.board[x2][y2] = f"{RED}{option}{RESET}"
         info += f"♛ na [{x1}][{y1}]\t szachuje {option} na [{x2}][{y2}]\n"
 
@@ -165,6 +167,7 @@ class Hetman(Goniec):
                 if (
                     self.boardInstance.board[x1][y1] == f"{GREEN}♛{RESET}"
                     or self.boardInstance.board[x1][y1] == f"{RED}♛{RESET}"
+                    or self.boardInstance.board[x1][y1] == f"{YELLOW}♛{RESET}"
                 ):
                     if x1 == x2:
                         if self.doesCheck(x2, y2, "♞") == True:
@@ -233,7 +236,7 @@ class Skoczek(Pionek):
 
     def markChecked(self, i, j, x, y, option):
         global info
-        self.boardInstance.board[i][j] = f"{RED}♞{RESET}"
+        self.boardInstance.board[i][j] = f"{YELLOW}♞{RESET}"
         self.boardInstance.board[i + x][j + y] = f"{RED}{option}{RESET}"
         info += f"♞ na [{i}][{j}]\t szachuje {option} na [{i + x}][{j + y}]\n"
 
@@ -243,7 +246,7 @@ class Skoczek(Pionek):
         ):
             return True
         return False
-
+    
     def getChecked(self):
         moves = [[1, 2], [2, 1], [-1, 2], [-2, 1], [-1, -2], [-2, -1], [1, -2], [2, -1]]
 
@@ -251,14 +254,9 @@ class Skoczek(Pionek):
             for j in range(0, len(self.boardInstance.board[i])):
                 if (
                     self.boardInstance.board[i][j] == f"{GREEN}♞{RESET}"
-                    or self.boardInstance.board[i][j] == f"{RED}♞{RESET}"
+                    or self.boardInstance.board[i][j] == f"{YELLOW}♞{RESET}"
                 ):
-                    for (
-                        x,
-                        y,
-                    ) in (
-                        moves
-                    ):
+                    for x, y in moves:
                         if self.isSafe(i, j, x, y):
                             if self.doesCheck(i, j, x, y, "♞") == True:
                                 self.markChecked(i, j, x, y, "♞")
@@ -327,7 +325,6 @@ class TestCheckmate:
         g.placeOnBoard()
         h.checkTakeDown(s.cords, g.cords)
         assert info == info
-
 
 if __name__ == "__main__":
     start()
